@@ -2,21 +2,11 @@
 
 ## Summary
 
-A threat actor posing as a recruiter ("HR Connect") made contact with the target over email and, in a follow-up message, directly requested the target's LinkedIn email and password in plaintext, under the pretext of "reviewing the profile and preparing recommended adjustments."
+A threat actor posing as a recruiter ("HR Connect") made contact with the target over email and, in a follow-up message, directly requested the target's email and password in plaintext, under the pretext of "reviewing the profile and preparing recommended adjustments."
 
 No malicious link, attachment, or spoofed domain was involved. The attack relied entirely on **social engineering via a plausible pretext + urgency language**, sent from a legitimately-authenticated (not spoofed) free webmail account. This is a scoped, verified writeup — claims below are limited to what the evidence supports.
 
 **Scope note:** There is no landing page, phishing link, or malware in this incident. This is a direct in-body credential solicitation attempt only.
-
----
-
-## Timeline
-
-| Time (UTC-ish, as observed) | Event |
-|---|---|
-| T+0 | Email contact established with `hr.connect2026[at]zohomail[.]com`, display name "HR Connect" |
-| T+~5 min | Message received asking generic screening questions (target role, salary range, work setup, location) |
-| T+later (same thread) | Follow-up message directly requests LinkedIn email + password, citing "profile adjustments for approval" |
 
 ---
 
@@ -51,21 +41,21 @@ No malicious link, attachment, or spoofed domain was involved. The attack relied
 | AbuseIPDB | Historical low-severity noise present (dated port/CMS-scan reports), consistent with prior rotation of a shared mobile/CGNAT address rather than activity tied to this actor |
 | Cisco Talos | Reviewed for reputation score |
 
-**Caveat:** This is a mobile carrier (CGNAT) address, not a dedicated attacker-controlled host or relay. Shared dynamic mobile ranges routinely accumulate unrelated abuse history from prior users of the same address, so the AbuseIPDB history is treated as **background noise, not evidence tied to this specific actor**. The submission method (interactive webmail session) does indicate this was a live, manually-operated account rather than a bulk/automated spam tool, which is a more meaningful signal than the blacklist history.
+This is a mobile carrier address, not a dedicated attacker-controlled host or relay. Shared dynamic mobile ranges routinely accumulate unrelated abuse history from prior users of the same address, so the AbuseIPDB history is treated as **background noise, not evidence tied to this specific actor**. The submission method (interactive webmail session) does indicate this was a live, manually-operated account rather than a bulk/automated spam tool, which is a more meaningful signal than the blacklist history.
 
 ### Pretext / Social Engineering Content
 
 The actor:
 1. Established contact under a plausible recruiting pretext
 2. Opened with a low-suspicion screening questionnaire (role, salary, location, priorities)
-3. Followed up requesting LinkedIn **email and password in plaintext**, framed as necessary to "review and prepare recommended profile adjustments for approval"
+3. Followed up requesting **email and password in plaintext**, framed as necessary to "review and prepare recommended profile adjustments for approval"
 4. Used urgency language ("kindly share ... to proceed immediately")
 
 No legitimate recruiter, staffing platform, or career service requires a candidate's actual account password for any reason — this is the definitive indicator that separates this from a normal (if oddly-run) recruiting interaction.
 
 ---
 
-## Indicators of Compromise (defanged)
+## Indicators of Compromise
 
 | Type | Value |
 |---|---|
@@ -75,15 +65,12 @@ No legitimate recruiter, staffing platform, or career service requires a candida
 | ASN | AS36873 (Airtel Networks Limited, Nigeria) |
 | Mail infrastructure | `mail.zoho.com` / `136.143.188[.]92` (legitimate provider, abused account) |
 
-*IOCs are provided for detection/research purposes only. Do not interact with the listed address.*
-
 ---
 
 ## MITRE ATT&CK Mapping
 
 | Tactic | Technique | ID | Notes |
 |---|---|---|---|
-| Reconnaissance | Gather Victim Identity Information: Email Addresses | T1589.002 | Target's email address was known to the actor prior to contact |
 | Resource Development | Establish Accounts: Email Account | T1585.002 | Free Zoho webmail account created/used for the pretext identity |
 | Initial Access | Phishing | T1566 | General phishing via email under a recruiting pretext |
 | Credential Access | Phishing for Information | T1598 | Parent technique used deliberately — no sub-technique (e.g. Spearphishing Link, T1598.003) applies, since the credential request occurred entirely in-body with no link or attachment |
@@ -101,4 +88,4 @@ No legitimate recruiter, staffing platform, or career service requires a candida
 
 ## Disclosure
 
-This writeup is shared for security awareness and detection-engineering purposes. All personally identifying information belonging to the target has been redacted. The reported sender address is a free-tier email account and is included only as a research indicator, not as an accusation against Zoho Corporation, which is not implicated beyond being the (abused) service provider.
+This writeup is shared for security awareness and detection-engineering purposes.The reported sender address is a free-tier email account and is included only as a research indicator, not as an accusation against Zoho Corporation, which is not implicated beyond being the (abused) service provider.
