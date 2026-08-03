@@ -1,4 +1,4 @@
-# Recruitment Pretext Credential Harvesting Attempt — Direct Email-Based Solicitation (No Landing Page)
+# Credential Harvesting Attempt — Direct Email-Based Solicitation (No Landing Page)
 
 ## Summary
 
